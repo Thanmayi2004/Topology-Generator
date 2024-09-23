@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Upload History</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Input File</th>
+        <th>Graph URL</th>
+        <th>Upload Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for record in upload_history %}
+        <tr>
+          <td>{{ record.user }}</td>
+          <td>{{ record.input_file_link }}</td>
+          <td><a href="{% url 'serve_graph_image' record.id %}">View Graph</a></td>
+          <td>{{ record.upload_time }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

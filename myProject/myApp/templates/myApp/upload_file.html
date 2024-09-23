@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload YAML File</title>
+    <style>
+        /* Inline CSS for the upload_file.html page */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 10px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+            text-align: left;
+            margin-bottom: 50px; /* Add gap between the heading and the form */
+        }
+
+        .upload-form {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* Align form and buttons to the left */
+            margin-bottom: 100px; /* Add space between the form and history table */
+        }
+
+        .btn-primary {
+            background-color: #E0FFFF; /* Light blue color */
+            border: none;
+            color: black; /* Text color for better contrast */
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+            align-self: flex-start; /* Align the button to the left */
+        }
+
+        .btn-primary:hover {
+            background-color: #B0E0E6; /* Slightly darker shade on hover */
+        }
+
+        .error-message {
+            color: red;
+            text-align: center;
+        }
+
+        .graph-section {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .graph-image {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .history-section {
+            text-align: center; /* Center-align the table section */
+            margin-top: 40px; /* Add space between the form and history table */
+        }
+
+        .history-table {
+            width: 80%; /* Adjust width to fit within the container */
+            margin: auto; /* Center-align the table */
+            border-collapse: collapse;
+        }
+
+        .history-table th, .history-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .history-table th {
+            background-color: #ADD8E6; /* Light blue color for table headers */
+            color: black; /* Text color for better contrast */
+        }
+
+        .history-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .history-table tr:hover {
+            background-color: #ddd;
+        }
+
+        .view-graph-link {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .view-graph-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    {% extends 'base.html' %}
+    {% block content %}
+    <div class="container">
+        <h1>Upload YAML File</h1>
+
+        <form method="post" enctype="multipart/form-data" class="upload-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-primary">Upload</button>
+        </form>
+
+        {% if error_message %}
+        <p class="error-message">{{ error_message }}</p>
+        {% endif %}
+
+        {% if graph_url %}
+        <div class="graph-section">
+            <h2>Generated Graph</h2>
+            <img src="{{ graph_url }}" alt="Generated Graph" class="graph-image">
+        </div>
+        {% endif %}
+
+        <div class="history-section">
+            <h2>Upload History</h2>
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Date and Time</th>
+                        <th>Input File</th>
+                        <th>Graph</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in upload_history %}
+                    <tr>
+                        <td>{{ record.user }}</td>
+                        <td>{{ record.upload_time }}</td>
+                        <td>{{ record.input_file_link|safe }}</td>
+                        <td><a href="{% url 'serve_graph_image' record.id %}" class="view-graph-link">View Graph</a></td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4">No upload history available.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

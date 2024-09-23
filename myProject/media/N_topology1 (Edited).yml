@@ -1,0 +1,96 @@
+R1:
+ f0/0: R2
+ f2/0: R12
+ f1/0: R14
+R2:
+ f0/0: R12
+ f2/0: R1
+R3:
+ f0/0: R13
+ s5/1: FRSW2
+R4:
+ f0/0: S1
+ f2/0: R8
+ f1/0: H2
+R5:
+ f0/0: H2
+ f2/0: R14
+ a1/0: FRSW1
+R6:
+ a1/0: FRSW1
+ f0/0: R7
+ f2/0: PC3
+ f3/0: H3
+R7:
+ f1/0: S2
+ f0/0: R6
+R8:
+ f0/0: R11
+ f0/1: R4
+R9:
+ a1/0: FRSW2
+ f2/0: H1
+R10:
+ f1/0: H2
+ f0/0: S2
+R11:
+ f0/0: R8
+ a1/0: FRSW2
+R12:
+ f1/0: R2
+ f0/0: R1
+R13:
+ a1/0: FRSW2
+ f0/0: PC5
+ f2/0: R3
+R14:
+ f1/0: R1
+ f0/0: H1
+ f2/0: R5
+S1:
+ e0: Cloud1
+ e1: H2
+ e2: H3
+ e3: PC4
+ e4: R4
+S2:
+ e0: R10
+ e1: H3
+ e2: R7
+H1:
+ e0: R9
+ e1: R14
+ e2: H3
+H2:
+ e0: S1
+ e1: R10
+ e2: R5
+ e3: PC1
+ e4: PC2
+ e5: R4
+H3:
+ e0: S1
+ e1: S2
+ e2: H1
+PC1:
+ e0: H2
+PC2: 
+ e0: H2
+PC3: 
+ e0: R6
+PC4:
+ e0: S1
+PC5:
+ e0: R13
+Cloud1:
+ ethernet3: S1
+FRSW1:
+ a1/0: R5
+ a1/1: R6
+ a1/2: FRSW2
+FRSW2:
+ a1/0: R11
+ a1/1: R9
+ s5/0: R3
+ a1/2: R13
+ a1/3: FRSW1

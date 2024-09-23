@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Upload YAML File and Generate Graph</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="document" required>
+            <button type="submit">Upload</button>
+        </form>
+        
+
+        {% if history_list %}
+            <h2>Generated Graph</h2>
+            {% for history in history_list %}
+                <img src="{% url 'serve_graph_image' history.id %}" alt="Generated Graph" style="max-width:100%; height:auto;">
+            {% endfor %}
+        {% endif %}
+    </div>
+</body>
+</html>
